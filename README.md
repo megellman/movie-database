@@ -27,7 +27,6 @@ In this mini-project, you will build Rest API routes for creating, retrieving, a
 
 * It's done when the `/api/movie/:id` route deletes a route when tested using Insomnia. (delete)
 
-
 * It's done when the `/api/movie-reviews` route successfully gets all movies and the associated reiviews. (get)(join)
 
 * It's done when the `/api/review/:id` route successfully updates a review pertaining to a specific movie. (put)

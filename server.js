@@ -22,7 +22,7 @@ let db = mysql.createConnection({
 });
 
 db.connect((err) => {
-  if(err) {
+  if (err) {
     console.error("Database connection error" + err);
     return;
   }
@@ -30,14 +30,42 @@ db.connect((err) => {
 })
 
 // POST add movie
-app.post('/api/add-movie', async(req, res) => {
+app.post('/api/add-movie', async (req, res) => {
   const movieName = req.body.movieName;
-  db.query('INSERT INTO movies (movie_name) VALUES (?)', [movieName], async(err, result) => {
-    if(err){
-      console.log(err);
+  db.query('INSERT INTO movies (movie_name) VALUES (?)', [movieName], async (err, result) => {
+    if (err) {
+      console.error("Error adding movie", err);
+      return res.status(500).json({ error: "Database error" });
     }
-    console.log(result)
+    res.status(200).json({
+      message: "Movie added successfully",
+      movieName
+    })
   })
+})
+
+// GET all movies
+app.get('/api/movies', async (req, res) => {
+  db.query('SELECT * FROM movies', (err, result) => {
+    if (err) {
+      console.error("Error getting movies", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.status(200).json({
+      message: "Movies received successfully"
+    });
+  })
+})
+
+// DELETE a movie
+app.delete('/api/movie/:id', async(req, res) => {
+  db.query('DELETE FROM movies WHERE id = ?', [req.params.id], (err, result) => {
+    if(err){
+      console.error("Error deleting movie", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.status(200).json({ message: "Movie deleted successfully" });
+  } )
 })
 
 // Default response for any other request (Not Found)

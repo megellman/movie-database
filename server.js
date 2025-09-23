@@ -2,7 +2,6 @@ require('@dotenvx/dotenvx').config();
 const express = require('express');
 // Import and require mysql2
 const mysql = require('mysql2');
-const api = require('./routes/index')
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -10,9 +9,6 @@ const app = express();
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// Modular Routes
-app.use('/api', api);
 
 let db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -38,8 +34,11 @@ app.post('/api/add-movie', async (req, res) => {
       return res.status(500).json({ error: "Database error" });
     }
     res.status(200).json({
-      message: "Movie added successfully",
-      result
+      message: "Movie successfully added",
+      movie: {
+        id: result.insertId,
+        name: movieName,
+      }
     })
   })
 })
@@ -52,7 +51,8 @@ app.get('/api/movies', async (req, res) => {
       return res.status(500).json({ error: "Database error" });
     }
     res.status(200).json({
-      message: "Movies received successfully"
+      message: "All movies pulled",
+      result
     });
   })
 })
@@ -64,7 +64,9 @@ app.delete('/api/movie/:id', async (req, res) => {
       console.error("Error deleting movie", err);
       return res.status(500).json({ error: "Database error" });
     }
-    res.status(200).json({ message: "Movie deleted successfully" });
+    res.status(200).json({ 
+      message: "Movie deleted successfully"
+    });
   })
 })
 
@@ -93,7 +95,10 @@ app.put('/api/review/:id', async(req, res) => {
     }
     res.status(200).json({
       message: "Review updated successfully",
-      results
+      update: {
+        review: review,
+        id: id
+      }
     });
   })
 })

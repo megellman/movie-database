@@ -39,7 +39,7 @@ app.post('/api/add-movie', async (req, res) => {
     }
     res.status(200).json({
       message: "Movie added successfully",
-      movieName
+      result
     })
   })
 })
@@ -58,14 +58,28 @@ app.get('/api/movies', async (req, res) => {
 })
 
 // DELETE a movie
-app.delete('/api/movie/:id', async(req, res) => {
+app.delete('/api/movie/:id', async (req, res) => {
   db.query('DELETE FROM movies WHERE id = ?', [req.params.id], (err, result) => {
-    if(err){
+    if (err) {
       console.error("Error deleting movie", err);
       return res.status(500).json({ error: "Database error" });
     }
     res.status(200).json({ message: "Movie deleted successfully" });
-  } )
+  })
+})
+
+// GET all movie reviews
+app.get('/api/movie-reviews', async (req, res) => {
+  db.query('SELECT movies.movie_name, reviews.review FROM movies INNER JOIN reviews ON movies.id = reviews.movie_id ORDER BY movies.movie_name', (err, results) => {
+    if (err) {
+      console.error("Error with database: ", err);
+      return res.status(500).json({ message: "Database error" });
+    }
+    res.status(200).json({
+      message: "Movie review received successfully",
+      results
+    });
+  })
 })
 
 // Default response for any other request (Not Found)

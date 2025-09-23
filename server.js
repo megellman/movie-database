@@ -82,6 +82,22 @@ app.get('/api/movie-reviews', async (req, res) => {
   })
 })
 
+// PUT update a review
+app.put('/api/review/:id', async(req, res) => {
+  const review = req.body.review;
+  const id = req.params.id;
+  db.query('UPDATE reviews SET review = ? WHERE id = ?', [review, id], (err, results) => {
+    if(err){
+      console.error("Error with database: ", err);
+      return res.status(500).json({message: "Database error"});
+    }
+    res.status(200).json({
+      message: "Review updated successfully",
+      results
+    });
+  })
+})
+
 // Default response for any other request (Not Found)
 app.use((req, res) => {
   res.status(404).end();

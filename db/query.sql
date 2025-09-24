@@ -1,4 +1,4 @@
-SELECT movies.movie_name AS movie, reviews.review
+SELECT movies.movie_name AS movie, reviews.review, reviews.id as review_id
 FROM movies
 LEFT JOIN reviews
 ON reviews.movie_id = movies.id

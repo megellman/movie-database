@@ -31,6 +31,8 @@
 
 ## Description 
 
+Watch demo video [here](https://app.screencastify.com/watch/eHTe16rqqjCedwWxcOdP)
+
 Movie Database is a REST API built with Node.js, Express.js, and MySQL. It allows users to create, retrieve, update, and delete movies and their associated reviews through API routes tested with Insomnia.
 
 This project was built to practice designing relational database schemas, using joins in SQL, and implementing RESTful routes with Express.js. It provides a foundation for working with persistent data in full-stack applications.

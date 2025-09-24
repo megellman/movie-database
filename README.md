@@ -1,7 +1,7 @@
-# movie-database
+# Movie Database
 
 ## Table of Contents
-- [movie-database](#movie-database)
+- [Movie Database](#movie-database)
   - [Table of Contents](#table-of-contents)
   - [Technology Used](#technology-used)
   - [Description](#description)
